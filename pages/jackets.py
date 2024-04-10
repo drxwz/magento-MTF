@@ -4,7 +4,8 @@ import random
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class Jackets:
     def __init__(self, driver):
@@ -19,7 +20,8 @@ class Jackets:
         )
 
     def click_lando_gym_jacket(self):
-        lando_gym_jacket = self.driver.find_element(*self.lando_jacket_locator)
+        lando_gym_jacket = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.lando_jacket_locator))
         lando_gym_jacket.click()
 
     def select_product(self, product_name):
@@ -27,8 +29,8 @@ class Jackets:
             self.click_lando_gym_jacket()
 
     def add_to_cart(self):
-        add_to_cart_button = self.driver.find_element(
-            *self.add_to_cart_locator)
+        add_to_cart_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.add_to_cart_locator))
         add_to_cart_button.click()
 
 
