@@ -7,15 +7,17 @@ from pages.login_page import LoginPage
 from pages.account_page import AccountPageLocators
 
 
-@pytest.mark.usefixtures("handle_consent")
+# @pytest.mark.usefixtures("handle_consent")
 def test_valid_login(logged_in_browser):
     my_account_element = logged_in_browser.find_element(
-        *AccountPageLocators.my_account_locator)
-    assert my_account_element.is_displayed(
+        *AccountPageLocators.my_account_locator
+    )
+    assert (
+        my_account_element.is_displayed()
     ), "My account element is not displayed on the new page"
 
 
-@pytest.mark.usefixtures("handle_consent")
+# @pytest.mark.usefixtures("handle_consent")
 def test_invalid_login(browser, config):
     browser.get(config["urls"]["login_page"])
     login_page = LoginPage(browser)

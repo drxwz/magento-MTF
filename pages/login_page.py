@@ -10,7 +10,9 @@ class LoginPage:
         self.password_input_locator = (By.XPATH, "//input[@id='pass']")
         self.login_button_locator = (By.XPATH, "//button[@id='send2']")
         self.consent_element_locator = (
-            By.XPATH, "//p[@class='fc-button-label' and contains(text(), 'Consent')]")
+            By.XPATH,
+            "//p[@class='fc-button-label' and contains(text(), 'Consent')]",
+        )
 
     def handle_consent(self):
         try:
