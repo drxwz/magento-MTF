@@ -11,6 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
+@pytest.mark.usefixtures("handle_consent")
 @pytest.mark.parametrize("product_name", ["lando_gym_jacket"])
 def test_successful_order_placement(browser, config, logged_in_browser, product_name):
     # Find an item
@@ -46,4 +47,6 @@ def test_successful_order_placement(browser, config, logged_in_browser, product_
     # Fill the forms
     checkout_page = Checkout(browser)
     checkout_page.fill_checkout_fields()
-    time.sleep(2)
+    checkout_page.select_shipment()
+    checkout_page.click_next_button()
+    assert browser.current_url == config["urls"]["payment_page"]

@@ -7,13 +7,13 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 class Jackets:
     def __init__(self, driver):
         self.driver = driver
         self.lando_jacket_locator = (
             By.XPATH,
-            '(//a[@href="https://magento.softwaretestingboard.com/lando-gym-jacket.html"])[2]',
-        )
+            "//a[@class='product-item-link' and @href='https://magento.softwaretestingboard.com/lando-gym-jacket.html'][contains(text(), 'Lando Gym Jacket')]")
         self.add_to_cart_locator = (
             By.XPATH,
             "//button[contains(@id, 'product-addtocart-button')]",
