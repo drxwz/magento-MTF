@@ -59,8 +59,7 @@ class HomePage:
         tops_submenu.click()
 
     def click_bottoms_submenu(self):
-        bottoms_submenu = self.driver.find_element(
-            *self.bottoms_submenu_locator)
+        bottoms_submenu = self.driver.find_element(*self.bottoms_submenu_locator)
         bottoms_submenu.click()
 
     def click_tops_jackets_submenu(self):
@@ -76,13 +75,11 @@ class HomePage:
         tops_hoodies_submenu.click()
 
     def click_tops_tees_submenu(self):
-        tops_tees_submenu = self.driver.find_element(
-            *self.tops_tees_submenu_locator)
+        tops_tees_submenu = self.driver.find_element(*self.tops_tees_submenu_locator)
         tops_tees_submenu.click()
 
     def click_tops_tanks_submenu(self):
-        tops_tanks_submenu = self.driver.find_element(
-            *self.tops_tanks_submenu_locator)
+        tops_tanks_submenu = self.driver.find_element(*self.tops_tanks_submenu_locator)
         tops_tanks_submenu.click()
 
     def click_cart(self):

@@ -1,10 +1,12 @@
+import random
+import us
+
 from faker import Faker
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import us
-import random
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 
 class Checkout:
@@ -17,12 +19,25 @@ class Checkout:
             "street_address_field_locator": (By.XPATH, "//input[@name='street[0]']"),
             "city_field_locator": (By.XPATH, "//input[@name='city']"),
             "zip_field_locator": (By.XPATH, "//input[@name='postcode']"),
-            "phone_number_field_locator": (By.XPATH, "//input[@class='input-text' and @type='text' and @name='telephone']"),
+            "phone_number_field_locator": (
+                By.XPATH,
+                "//input[@class='input-text' and @type='text' and @name='telephone']",
+            ),
             "country_dropdown_locator": (By.XPATH, "//select[@name='country_id']"),
             "state_dropdown_locator": (By.XPATH, "//select[@name='region_id']"),
-            "tablerate_shipping_method": (By.XPATH, "//input[@type='radio' and contains(@class, 'radio') and @value='tablerate_bestway']"),
-            "fixed_shipping_method": (By.XPATH, "//input[@type='radio' and contains(@class, 'radio') and @value='flatrate_flatrate']"),
-            "next_button": (By.XPATH, "//button[@data-role='opc-continue' and contains(@class, 'button') and contains(@class, 'continue') and contains(@class, 'primary')]"),
+            "tablerate_shipping_method": (
+                By.XPATH,
+                "//input[@type='radio' and contains(@class, 'radio') and @value='tablerate_bestway']",
+            ),
+            "fixed_shipping_method": (
+                By.XPATH,
+                "//input[@type='radio' and contains(@class, 'radio') and @value='flatrate_flatrate']",
+            ),
+            "next_button": (
+                By.XPATH,
+                "//button[@data-role='opc-continue' and contains(@class, 'button') and contains(@class, 'continue') and contains(@class, 'primary')]",
+            ),
+            "save_address": "//input[@type='checkbox' and @class='checkbox' and @id='shipping-save-in-address-book']",
         }
 
     def fill_checkout_fields(self):
@@ -61,7 +76,11 @@ class Checkout:
 
     def select_shipment(self):
         random_index = random.randint(0, 1)
-        selected_shipping_method_key = "tablerate_shipping_method" if random_index == 0 else "fixed_shipping_method"
+        selected_shipping_method_key = (
+            "tablerate_shipping_method"
+            if random_index == 0
+            else "fixed_shipping_method"
+        )
         selected_radio_button_xpath = self.checkout_fields[selected_shipping_method_key]
         selected_radio_button = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(selected_radio_button_xpath)
@@ -77,3 +96,26 @@ class Checkout:
             next_button.click()
         else:
             print("Next button locator not found in checkout fields.")
+
+    def check_if_new_address_exists(self):
+        try:
+            new_address_button = self.driver.find_element(
+                By.XPATH, """//span[@data-bind="i18n: 'New Address'"]"""
+            )
+            new_address_button.click()
+
+            popup_locator = (
+                By.XPATH,
+                "(//div[@class='modal-inner-wrap' and @data-role='focusable-scope'])[4]",
+            )
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(popup_locator)
+            )
+
+        except NoSuchElementException:
+            print("New Address button not found")
+            pass
+
+
+# idee: daca nu exista butonul ala, facem normal flow in care completam adresa si bifam shipment cumva integrat in ce avem deja
+#       iar daca exista new address sa incercam sa facem un alt flow cu click pe next button separat pe fiecare flow and so on. sper sa iti aduci

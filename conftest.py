@@ -25,8 +25,7 @@ def config():
 
 @pytest.fixture(scope="function")
 def browser():
-    driver = webdriver.Chrome(service=ChromeService(
-        ChromeDriverManager().install()))
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     yield driver
     driver.quit()
 
@@ -51,25 +50,25 @@ def logged_in_browser(request, browser, config):
         login_page.login(config["email"], config["password"])
         assert browser.current_url == config["urls"]["account_page"]
         WebDriverWait(browser, 10).until(
-            EC.visibility_of_element_located(
-                AccountPageLocators.my_account_locator)
+            EC.visibility_of_element_located(AccountPageLocators.my_account_locator)
         )
         my_account_element = browser.find_element(
             *AccountPageLocators.my_account_locator
         )
-        assert (my_account_element.is_displayed(
-        )),             "My account element is not displayed on the new page"
+        assert (
+            my_account_element.is_displayed()
+        ), "My account element is not displayed on the new page"
 
     return browser
 
 
-@pytest.fixture
-def handle_consent(browser):
-    try:
-        consent_element = WebDriverWait(browser, 10).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, "//p[@class='fc-button-label' and contains(text(), 'Consent')]"))
-        )
-        consent_element.click()
-    except:
-        pass
+# @pytest.fixture
+# def handle_consent(browser):
+#     try:
+#         consent_element = WebDriverWait(browser, 1).until(
+#             EC.element_to_be_clickable(
+#                 (By.XPATH, "//p[@class='fc-button-label' and contains(text(), 'Consent')]"))
+#         )
+#         consent_element.click()
+#     except:
+#         pass

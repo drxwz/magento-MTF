@@ -13,7 +13,8 @@ class Jackets:
         self.driver = driver
         self.lando_jacket_locator = (
             By.XPATH,
-            "//a[@class='product-item-link' and @href='https://magento.softwaretestingboard.com/lando-gym-jacket.html'][contains(text(), 'Lando Gym Jacket')]")
+            "//a[@class='product-item-link' and @href='https://magento.softwaretestingboard.com/lando-gym-jacket.html'][contains(text(), 'Lando Gym Jacket')]",
+        )
         self.add_to_cart_locator = (
             By.XPATH,
             "//button[contains(@id, 'product-addtocart-button')]",
@@ -21,7 +22,8 @@ class Jackets:
 
     def click_lando_gym_jacket(self):
         lando_gym_jacket = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.lando_jacket_locator))
+            EC.element_to_be_clickable(self.lando_jacket_locator)
+        )
         lando_gym_jacket.click()
 
     def select_product(self, product_name):
@@ -30,7 +32,8 @@ class Jackets:
 
     def add_to_cart(self):
         add_to_cart_button = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.add_to_cart_locator))
+            EC.element_to_be_clickable(self.add_to_cart_locator)
+        )
         add_to_cart_button.click()
 
 
