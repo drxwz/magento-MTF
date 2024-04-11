@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.login_page import LoginPage
 from pages.account_page import AccountPageLocators
-from config.settings import Config
+from selenium.webdriver.common.by import By
 
 
 @pytest.fixture(scope="session")
@@ -61,3 +61,15 @@ def logged_in_browser(request, browser, config):
         )),             "My account element is not displayed on the new page"
 
     return browser
+
+
+@pytest.fixture
+def handle_consent(browser):
+    try:
+        consent_element = WebDriverWait(browser, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//p[@class='fc-button-label' and contains(text(), 'Consent')]"))
+        )
+        consent_element.click()
+    except:
+        pass

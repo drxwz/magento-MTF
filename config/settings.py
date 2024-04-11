@@ -12,6 +12,7 @@ class Config:
         "checkout_page": "https://magento.softwaretestingboard.com/checkout",
         "checkout_cart_page": "https://magento.softwaretestingboard.com/checkout/cart/",
         "checkout_page": "https://magento.softwaretestingboard.com/checkout/#shipping",
+        "payment_page": "https://magento.softwaretestingboard.com/checkout/#payment",
     }
 
     email = "fnamelname@email.com"
